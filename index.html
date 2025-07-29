@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auto Peças AM</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #e3f2fd;
+      color: #333;
+    }
+    header {
+      background-color: #1565c0;
+      color: #fff;
+      padding: 30px 40px;
+      text-align: center;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: #1976d2;
+      padding: 15px 0;
+    }
+    nav a {
+      color: #fff;
+      margin: 0 20px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1.1em;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    main section {
+      padding: 60px 40px;
+      max-width: 1200px;
+      margin: auto;
+      background: white;
+      margin-bottom: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    main h2 {
+      color: #1565c0;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .search-bar {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .search-bar input {
+      width: 320px;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 30px;
+    }
+    .item {
+      background: #bbdefb;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    .item img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .item h3 { margin-top: 10px; }
+    .item p { font-size: 0.9em; margin: 6px 0; }
+    .item button {
+      margin-top: 10px;
+      padding: 10px 15px;
+      background-color: #1565c0;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .item button:hover {
+      background-color: #0d47a1;
+    }
+
+    #carrinho {
+      background-color: #f1f8e9;
+      border: 1px solid #c5e1a5;
+      padding: 20px;
+      margin-top: 30px;
+      border-radius: 10px;
+    }
+    #mensagem {
+      color: green;
+      margin-top: 10px;
+      text-align: center;
+      font-weight: bold;
+    }
+    .carrinho-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px dashed #ccc;
+    }
+    .total {
+      text-align: right;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    .finalizar {
+      margin-top: 15px;
+      text-align: right;
+    }
+    .finalizar button {
+      padding: 10px 20px;
+      background-color: #388e3c;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    footer {
+      background-color: #0d47a1;
+      color: white;
+      text-align: center;
+      padding: 30px 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Amazonas Auto Moto Center</h1>
+    <p>Peças de carro e moto com qualidade, direto de Parintins-AM</p>
+  </header>
+
+  <nav>
+    <a href="#inicio">Início</a>
+    <a href="#pecas">Peças</a>
+    <a href="#contato">Contato</a>
+  </nav>
+
+  <main>
+    <section id="inicio">
+      <h2>Bem-vindo à Amazonas Auto Moto Center</h2>
+      <p>Oferecemos uma enorme variedade de peças automotivas e para motos. Qualidade, preço justo e atendimento especializado em Parintins-AM.</p>
+    </section>
+
+    <section id="pecas">
+      <h2>Peças Disponíveis</h2>
+      <div class="search-bar">
+        <input type="text" id="busca" placeholder="🔍 Buscar peça por nome...">
+      </div>
+      <div class="grid" id="pecas-lista"></div>
+      <div id="mensagem"></div>
+
+      <div id="carrinho">
+        <h3>Carrinho de Compras</h3>
+        <div id="itens-carrinho"></div>
+        <div class="total" id="total"></div>
+        <div class="finalizar">
+          <button onclick="finalizarCompra()">Finalizar Compra</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="contato">
+      <h2>Contato</h2>
+      <p><strong>Endereço:</strong> Rua Central, 123 - Parintins, AM</p>
+      <p><strong>Telefone:</strong> (92) 99999-9999</p>
+      <p><strong>Email:</strong> atendimento@amazonasautocenter.com.br</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Amazonas Auto Moto Center. Todos os direitos reservados.</p>
+  </footer>
+
+  <script>
+    const pecas = [
+      { nome: "Pneu aro 13 - Carro", descricao: "Ideal para carros compactos.", img: "aro 13.jpg", preco: 600 },
+      { nome: "Pneu esportivo - Moto", descricao: "Alto desempenho em curvas.", img: "D_NQ_NP_2X_920108-MLB81308984813_122024-F-par-de-pneus-dianttras-cg-titan-fan-125-150-des-esportivo.webp", preco: 650 },
+      { nome: "Filtro de óleo", descricao: "Mantém o óleo limpo.", img: "D_910657-MLB52850491297_122022-O.jpg", preco: 20 },
+      { nome: "Óleo sintético 5W30", descricao: "Lubrificação avançada.", img: "5w30.jpg", preco: 30 },
+      { nome: "Lanterna traseira LED", descricao: "Mais visibilidade.", img: "lanterna traseira led.jpg", preco: 40 },
+      { nome: "Velas NGK Iridium", descricao: "Ignição eficiente.", img: "ngk iridium.jpg", preco: 25 },
+      { nome: "Radiador compacto", descricao: "Controle térmico.", img: "radiador.jpg", preco: 35 },
+      { nome: "Pastilha de freio dianteira", descricao: "Frenagem precisa.", img: "pastilha de freio dianteira.jpg", preco: 15 }
+    ];
+
+    const lista = document.getElementById("pecas-lista");
+    const busca = document.getElementById("busca");
+    const mensagem = document.getElementById("mensagem");
+    const itensCarrinho = document.getElementById("itens-carrinho");
+    const totalEl = document.getElementById("total");
+    let carrinho = [];
+
+    function renderizarPecas(filtro = "") {
+      lista.innerHTML = "";
+      pecas.filter(p => p.nome.toLowerCase().includes(filtro.toLowerCase())).forEach(peca => {
+        const item = document.createElement("div");
+        item.className = "item";
+        item.innerHTML = `
+          <img src="${peca.img}" alt="${peca.nome}">
+          <h3>${peca.nome}</h3>
+          <p>${peca.descricao}</p>
+          <p><strong>R$ ${peca.preco.toFixed(2)}</strong></p>
+          <button onclick="adicionarAoCarrinho('${peca.nome}', ${peca.preco})">Adicionar ao Carrinho</button>
+        `;
+        lista.appendChild(item);
+      });
+    }
+
+    function adicionarAoCarrinho(nome, preco) {
+      carrinho.push({ nome, preco });
+      atualizarCarrinho();
+      mensagem.innerText = "Item adicionado ao carrinho!";
+      setTimeout(() => mensagem.innerText = "", 2000);
+    }
+
+    function atualizarCarrinho() {
+      itensCarrinho.innerHTML = "";
+      let total = 0;
+      carrinho.forEach((item, index) => {
+        total += item.preco;
+        const div = document.createElement("div");
+        div.className = "carrinho-item";
+        div.innerHTML = `<span>${item.nome}</span> <span>R$ ${item.preco.toFixed(2)}</span>`;
+        itensCarrinho.appendChild(div);
+      });
+      totalEl.innerText = `Total: R$ ${total.toFixed(2)}`;
+    }
+
+    function finalizarCompra() {
+      if (carrinho.length === 0) {
+        alert("Seu carrinho está vazio.");
+        return;
+      }
+      alert("Compra finalizada com sucesso!");
+      carrinho = [];
+      atualizarCarrinho();
+    }
+
+    busca.addEventListener("input", (e) => {
+      renderizarPecas(e.target.value);
+    });
+
+    renderizarPecas();
+  </script>
+</body>
+</html>
